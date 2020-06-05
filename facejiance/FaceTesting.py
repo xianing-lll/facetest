@@ -2,13 +2,13 @@ import cv2
 
 
 
-
 def faceRecognition(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 把人连彩色图片转化成灰度图片
     # cv2.imshow("DengZiQi", gray) 显示灰度视频
     # OpenCV人脸识别分类器
     classifier = cv2.CascadeClassifier("xml/haarcascade_frontalface_default.xml")
     color = (0, 255, 0)  # 定义框出人脸方框的颜色
+    font = cv2.FONT_HERSHEY_SIMPLEX
     # 调用识别人脸，并返回所有人脸
     faceRects = classifier.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=3, minSize=(32, 32))
     if len(faceRects):  # 大于0则检测到人脸
@@ -23,6 +23,14 @@ def faceRecognition(img):
             cv2.circle(img, (x + 3 * w // 4, y + h // 4 + 30), min(w // 8, h // 8), color,3)
             # 嘴巴
             cv2.rectangle(img, (x + 3 * w // 8, y + 3 * h // 4), (x + 5 * w // 8, y + 7 * h // 8), color,3)
+            imgzi = cv2.putText(img, 'Face recognition successful ' , (x, y-40), font, 0.5, (255, 250, 250), 1)
+
+    # 将文字框加入到图片中，(5,20)定义了文字框左顶点在窗口中的位置，最后参数定义文字颜色
+    #个参数依次是图片，添加的文字，左上角坐标，字体，字体大小，颜色，字体粗细
+
+    size=str(img.size)
+    imgzi = cv2.putText(img, 'auhter xianing', (10, 28), font, 0.5, (255, 250, 250), 1)
+    imgzi = cv2.putText(img, 'with * height ' + size, (10, 50), font, 0.5, (255, 250, 250), 1)
     cv2.imshow("image", img)  # 显示图像
 
 
